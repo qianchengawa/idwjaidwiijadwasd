@@ -68,9 +68,6 @@ local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
 			local args = {...}
 			AddF(ws,args)
 		elseif self == rp then
-			table.sort(F, function(a, b)
-				return tonumber(a) < tonumber(b)
-			end)
 			Save(F)
 		elseif self == rd then
 			print("玩家准备")
