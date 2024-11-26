@@ -69,7 +69,7 @@ local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
 			AddF(ws,args)
 		elseif self == rp then
 			table.sort(F, function(a, b)
-				return a < b
+				return tonumber(a) < tonumber(b)
 			end)
 			Save(F)
 		elseif self == rd then
