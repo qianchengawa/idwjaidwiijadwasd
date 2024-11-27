@@ -63,9 +63,9 @@ local function AddF(event,args)
 end
 
 local Window = Rayfield:CreateWindow({
-	Name = "SDHub V2.1",
+	Name = "TDM V0.7",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-	LoadingTitle = "SDHub",
+	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
 	Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 	DisableRayfieldPrompts = false,
