@@ -72,8 +72,12 @@ local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
 			Save(F)
 		elseif self == rd then
 			local data = Load()
-			for i,v in pairs(data) do
-				print(i.."|"..tostring(v[1])..":"..tostring(v[2]).." "..tostring(v[3]).." "..tostring(v[4]).." "..tostring(v[5]).." "..tostring(unpack(v)))
+			if data then
+				for i,v in pairs(data) do
+					print(i.."|"..tostring(v[1])..":"..tostring(v[2]).." "..tostring(v[3]).." "..tostring(v[4]).." "..tostring(v[5]).." "..tostring(unpack(v)))
+				end
+			else
+				print("数据没找到")
 			end
 		end
 	end
