@@ -135,8 +135,8 @@ if game.PlaceId == 14279724900 then --游戏内
 						end)
 						for i,v in pairs(data) do
 							repeat wait() until gameend.Value == false and times.Value >= tonumber(v[1])
-							local cefra = v[4]:split(", ")
 							if v[2] == "placeTower" then
+								local cefra = v[4]:split(", ")
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
 							elseif v[2] == "waveSkip" then
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
