@@ -90,12 +90,6 @@ if game.PlaceId == 14279724900 then --游戏内
 			aaa:ClickButton2(Vector2.new())
 		end)
 	end)
-	Rayfield:Notify({
-		Title = "TDM",
-		Content = "防挂机踢注入成功！",
-		Duration = 6.5,
-		Image = "clock",
-	})
 	local inc = false
 	local Tab = Window:CreateTab("主要功能", "camera") -- Title, Image
 	local Section = Tab:CreateSection("倍速")
@@ -108,12 +102,6 @@ if game.PlaceId == 14279724900 then --游戏内
 		MultipleOptions = false,
 		Callback = function(Options)
 			speed = tonumber(unpack(Options))
-			Rayfield:Notify({
-				Title = "TDM",
-				Content = "已切换为"..tostring(unpack(Options)).."倍速",
-				Duration = 6.5,
-				Image = "clock",
-			})
 		end,
 	})
 	local V1 = false
@@ -121,21 +109,6 @@ if game.PlaceId == 14279724900 then --游戏内
 		Name = "锁定倍速",
 		CurrentValue = false,
 		Callback = function(Value)
-			if Value == true then
-				Rayfield:Notify({
-					Title = "TDM",
-					Content = "已开启锁定倍速",
-					Duration = 6.5,
-					Image = "clock",
-				})
-			elseif Value == false then
-				Rayfield:Notify({
-					Title = "TDM",
-					Content = "已关闭锁定倍速",
-					Duration = 6.5,
-					Image = "clock",
-				})
-			end
 			V1 = Value
 			pcall(function()
 				while V1 do
@@ -160,12 +133,6 @@ if game.PlaceId == 14279724900 then --游戏内
 							AddF(plev,args)
 						elseif self == sel then --售卖塔
 							local args = {...}
-							Rayfield:Notify({
-								Title = "TDM",
-								Content = tostring("售卖塔编号: "..tostring(args[1])),
-								Duration = 6.5,
-								Image = "clock",
-							})
 							AddF(sel,args)
 						elseif self == up then --升级塔
 							local args = {...}
@@ -176,14 +143,14 @@ if game.PlaceId == 14279724900 then --游戏内
 						elseif self == ws then --跳过波
 							local args = {...}
 							AddF(ws,args)
-						elseif self == rp then
-							Save(F)
-							inc = false
 						elseif self == slboost then
 							local args = {...}
 							AddF(slboost,args)
 						elseif self == timestop then
 							AddF(timestop)
+						elseif self == rp then
+							Save(F)
+							inc = false
 						end
 					end
 				end
