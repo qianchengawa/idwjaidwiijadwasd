@@ -72,7 +72,7 @@ local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
 		elseif self == rd then
 			local data = Load()
 			for i,v in pairs(data) do
-				print(i.."|"..v[1]..":"..v[2].." "..v[3].." "..v[4].." "..v[5].." "..v)
+				print(i.."|"..tostring(v[1])..":"..tostring(v[2]).." "..tostring(v[3]).." "..tostring(v[4]).." "..tostring(v[5]).." "..tostring(unpack(v)))
 			end
 		end
 	end
