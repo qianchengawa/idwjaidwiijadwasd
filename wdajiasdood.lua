@@ -144,13 +144,13 @@ if game.PlaceId == 14279724900 then --游戏内
 							end
 						end
 						repeat wait() until gameend.Value == true
+						times.Value = 0
 					else
 						times.Value = 0
 						rp:FireServer()
 						wait(1)
 						rd:FireServer(game:GetService("Players").LocalPlayer)
 					end
-					wait()
 				end
 			else
 				print("数据没找到")
