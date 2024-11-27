@@ -79,7 +79,7 @@ local function AddF(event,args)
 end
 
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V0.9",
+	Name = "TDM V1.0",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
