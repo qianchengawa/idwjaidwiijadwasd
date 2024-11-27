@@ -137,13 +137,13 @@ if game.PlaceId == 14279724900 then --游戏内
 								break
 							end
 							if gameend.Value == false then
-								rp:FireServer()
-								wait(.1)
-								rd:FireServer()
-								wait(0.5)
 								break
 							end
 						end
+					else
+						rp:FireServer()
+						wait(.1)
+						rd:FireServer()
 					end
 					wait()
 				end
