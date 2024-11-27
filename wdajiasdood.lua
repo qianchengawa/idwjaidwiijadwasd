@@ -38,12 +38,14 @@ function Save(data)
 		return false
 	end
 	writefile(fullPath, encoded)
-	Rayfield:Notify({
-		Title = "TDM",
-		Content = [[文件保存成功！\n路径位于注入器文件夹\workspace\'TDM\当前章节.json']],
-		Duration = 6.5,
-		Image = "clock",
-	})
+	pcall(function()
+		Rayfield:Notify({
+			Title = "TDM",
+			Content = [[文件保存成功！\n路径位于注入器文件夹\workspace\'TDM\当前章节.json']],
+			Duration = 6.5,
+			Image = "clock",
+		})
+	end)
 	return true
 end
 
