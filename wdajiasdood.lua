@@ -122,14 +122,6 @@ if game.PlaceId == 14279724900 then --游戏内
 			local data = Load()
 			if data then
 				while V do
-					task.spawn(function()
-						while V do
-							repeat wait() until gameend.Value == true
-							rp:FireServer()
-							wait(.1)
-							rd:FireServer()
-						end
-					end)
 					if gameend.Value == false then
 						for i,v in pairs(data) do
 							repeat wait() until times.Value >= tonumber(v[1])
@@ -141,7 +133,10 @@ if game.PlaceId == 14279724900 then --游戏内
 							else
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
 							end
-							if V == false or gameend.Value == false then
+							if V == false or gameend.Value == true then
+								rp:FireServer()
+								wait(.1)
+								rd:FireServer()
 								break
 							end
 						end
