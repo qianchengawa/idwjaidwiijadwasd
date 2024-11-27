@@ -15,8 +15,8 @@ local times = game:GetService("ReplicatedStorage").Game.Clock
 local character = game:GetService("ReplicatedStorage").Chapter
 local TowerDatasF = workspace.Scripted.TowerData
 local firsttower = nil
-local gameend = game:GetService("ReplicatedStorage")["ended         "]
-local inm = game:GetService("ReplicatedStorage")["ended         "].inMenu
+local gameend = game:GetService("ReplicatedStorage").ended
+local inm = game:GetService("ReplicatedStorage").ended.inMenu
 TowerDatasF.ChildAdded:Connect(function(v)
 	if not firsttower then
 		firsttower = v.Name
