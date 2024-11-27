@@ -72,14 +72,14 @@ local function AddF(event,args)
 	elseif event == slboost then
 		local boost1 = tostring(args[1])
 		local boost2 = tostring(args[2])
-		F[#F+1] = {tostring(times.Value),event.Name,boost1,boost2}
+		F[#F+1] = {tostring(times.Value),event.Name,tostring(boost1),tostring(boost2)}
 	elseif event == timestop then
 		F[#F+1] = {tostring(times.Value),event.Name}
 	end
 end
 
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V1.0",
+	Name = "TDM V9.05",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -169,7 +169,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							AddF(plev,args)
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "放置 "..tostring(args[1]),
+								Content = tostring("放置 "..tostring(args[1])),
 								Duration = 6.5,
 								Image = "clock",
 							})
@@ -177,7 +177,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							local args = {...}
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "售卖塔编号: "..tostring(args[1]),
+								Content = tostring("售卖塔编号: "..tostring(args[1])),
 								Duration = 6.5,
 								Image = "clock",
 							})
@@ -186,7 +186,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							local args = {...}
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "升级塔编号: "..tostring(args[1]),
+								Content = tostring("升级塔编号: "..tostring(args[1])),
 								Duration = 6.5,
 								Image = "clock",
 							})
@@ -195,7 +195,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							local args = {...}
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "更改攻击方式塔编号: "..tostring(args[1]),
+								Content = tostring("更改攻击方式塔编号: "..tostring(args[1])),
 								Duration = 6.5,
 								Image = "clock",
 							})
@@ -216,7 +216,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							local args = {...}
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "编号"..tostring(args[1]).."绑定 编号"..tostring(args[2]),
+								Content = tostring("编号"..tostring(args[1]).."绑定 编号"..tostring(args[2])),
 								Duration = 6.5,
 								Image = "clock",
 							})
