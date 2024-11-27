@@ -74,30 +74,35 @@ local Window = Rayfield:CreateWindow({
 })
 
 if game.PlaceId == 14279724900 then --游戏内
+	local inc = false
 	local Tab = Window:CreateTab("录制", "camera") -- Title, Image
 	local Button = Tab:CreateButton({
 		Name = "开始录制\n（点击重播之后在准备页面点击）\n（录制结束后点击重播自动结束)",
 		Callback = function()
+			inc = true
 			local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
-				local method = getnamecallmethod():lower()
-				if tostring(method) == "fireserver" then
-					if self == plev then --放置塔
-						local args = {...}
-						AddF(plev,args)
-					elseif self == sel then --售卖塔
-						local args = {...}
-						AddF(sel,args)
-					elseif self == up then --升级塔
-						local args = {...}
-						AddF(up,args)
-					elseif self == af then --更改攻击方式
-						local args = {...}
-						AddF(af,args)
-					elseif self == ws then --跳过波
-						local args = {...}
-						AddF(ws,args)
-					elseif self == rp then
-						Save(F)
+				if inc then
+					local method = getnamecallmethod():lower()
+					if tostring(method) == "fireserver" then
+						if self == plev then --放置塔
+							local args = {...}
+							AddF(plev,args)
+						elseif self == sel then --售卖塔
+							local args = {...}
+							AddF(sel,args)
+						elseif self == up then --升级塔
+							local args = {...}
+							AddF(up,args)
+						elseif self == af then --更改攻击方式
+							local args = {...}
+							AddF(af,args)
+						elseif self == ws then --跳过波
+							local args = {...}
+							AddF(ws,args)
+						elseif self == rp then
+							Save(F)
+							inc = false
+						end
 					end
 				end
 				return hook(self,...)
