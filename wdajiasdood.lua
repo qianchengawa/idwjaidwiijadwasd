@@ -122,9 +122,15 @@ if game.PlaceId == 14279724900 then --游戏内
 			local data = Load()
 			if data then
 				while true do
+					task.spawn(function()
+						while true do
+							repeat wait() until gameend.Value == true
+							rp:FireServer()
+							rd:FireServer()
+						end
+					end)
 					for i,v in pairs(data) do
-						repeat wait() until gameend.Value == false and inm == false
-						repeat wait() until times.Value >= tonumber(v[1])
+						repeat wait() until gameend.Value == false and times.Value >= tonumber(v[1])
 						local cefra = v[4]:split(", ")
 						if v[2] == "placeTower" then
 							game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
