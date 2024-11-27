@@ -11,11 +11,12 @@ local ws = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChi
 local rp = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("ReplayCore")
 local rd = game:GetService("ReplicatedStorage"):WaitForChild("GAME_START"):WaitForChild("readyButton")
 local times = game:GetService("ReplicatedStorage").Game.Clock
+local character = game:GetService("ReplicatedStorage").Chapter
 
 local F = {}
 
 function Save(data)
-	local fullPath = "TDM.json"
+	local fullPath = "TDM"..character.Value..".json"
 	local success, encoded = pcall(httpService.JSONEncode, httpService, data)
 	if not success then
 		return false
@@ -26,7 +27,7 @@ function Save(data)
 end
 
 function Load()
-	local file = "TDM.json"
+	local file = "TDM"..character.Value..".json"
 	if not isfile(file) then return false end
 
 	local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
