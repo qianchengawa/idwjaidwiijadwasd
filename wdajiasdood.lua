@@ -91,15 +91,17 @@ if game.PlaceId == 14279724900 then --游戏内
 			print(unpack(Options))
 		end,
 	})
-	local V = false
+	local V1 = false
 	local Toggle = Tab:CreateToggle({
 		Name = "锁定倍速",
 		CurrentValue = false,
 		Callback = function(Value)
-			V = Value
+			V1 = Value
 			pcall(function()
-				repeat wait() until game:GetService("ReplicatedStorage"):WaitForChild("Game"):WaitForChild("Speed").Value ~= speed
-				game:GetService("ReplicatedStorage"):WaitForChild("Game"):WaitForChild("Speed"):WaitForChild("Change"):FireServer(tonumber(speed))
+				while V1 do
+					repeat wait() until game:GetService("ReplicatedStorage"):WaitForChild("Game"):WaitForChild("Speed").Value ~= speed
+					game:GetService("ReplicatedStorage"):WaitForChild("Game"):WaitForChild("Speed"):WaitForChild("Change"):FireServer(tonumber(speed))
+				end
 			end)
 		end,
 	})
