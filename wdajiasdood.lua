@@ -145,8 +145,9 @@ if game.PlaceId == 14279724900 then --游戏内
 						end
 						repeat wait() until gameend.Value == true
 					else
+						times.Value = 0
 						rp:FireServer()
-						wait(.1)
+						wait(1)
 						rd:FireServer()
 					end
 					wait()
