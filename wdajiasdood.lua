@@ -51,14 +51,6 @@ function Save(data)
 		return false
 	end
 	writefile(fullPath, encoded)
-	pcall(function()
-		Rayfield:Notify({
-			Title = "TDM",
-			Content = [[文件保存成功！\n路径位于注入器文件夹\workspace\'TDM\当前章节.json']],
-			Duration = 6.5,
-			Image = "clock",
-		})
-	end)
 	return true
 end
 
@@ -166,12 +158,6 @@ if game.PlaceId == 14279724900 then --游戏内
 						if self == plev then --放置塔
 							local args = {...}
 							AddF(plev,args)
-							Rayfield:Notify({
-								Title = "TDM",
-								Content = tostring("放置 "..tostring(args[1])),
-								Duration = 6.5,
-								Image = "clock",
-							})
 						elseif self == sel then --售卖塔
 							local args = {...}
 							Rayfield:Notify({
@@ -183,50 +169,20 @@ if game.PlaceId == 14279724900 then --游戏内
 							AddF(sel,args)
 						elseif self == up then --升级塔
 							local args = {...}
-							Rayfield:Notify({
-								Title = "TDM",
-								Content = tostring("升级塔编号: "..tostring(args[1])),
-								Duration = 6.5,
-								Image = "clock",
-							})
 							AddF(up,args)
 						elseif self == af then --更改攻击方式
 							local args = {...}
-							Rayfield:Notify({
-								Title = "TDM",
-								Content = tostring("更改攻击方式塔编号: "..tostring(args[1])),
-								Duration = 6.5,
-								Image = "clock",
-							})
 							AddF(af,args)
 						elseif self == ws then --跳过波
 							local args = {...}
 							AddF(ws,args)
 						elseif self == rp then
-							Rayfield:Notify({
-								Title = "TDM",
-								Content = "检测到录制结束，尝试保存文件",
-								Duration = 6.5,
-								Image = "clock",
-							})
 							Save(F)
 							inc = false
 						elseif self == slboost then
 							local args = {...}
-							Rayfield:Notify({
-								Title = "TDM",
-								Content = tostring("编号"..tostring(args[1]).."绑定 编号"..tostring(args[2])),
-								Duration = 6.5,
-								Image = "clock",
-							})
 							AddF(slboost,args)
 						elseif self == timestop then
-							Rayfield:Notify({
-								Title = "TDM",
-								Content = "咋瓦鲁多！",
-								Duration = 6.5,
-								Image = "clock",
-							})
 							AddF(timestop)
 						end
 					end
