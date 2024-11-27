@@ -1,3 +1,4 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 task.spawn(function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
 end)
@@ -12,7 +13,18 @@ local rp = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChi
 local rd = game:GetService("ReplicatedStorage"):WaitForChild("GAME_START"):WaitForChild("readyButton")
 local times = game:GetService("ReplicatedStorage").Game.Clock
 local character = game:GetService("ReplicatedStorage").Chapter
-
+local TowerDatasF = workspace.Scripted.TowerData
+local firsttower = nil
+TowerDatasF.ChildAdded:Connect(function(v)
+	if not firsttower then
+		firsttower = v.Name
+	end
+end)
+TowerDatasF.ChildRemoved:Connect(function()
+	if not TowerDatasF:GetChildren()[1] then
+		firsttower = nil
+	end
+end)
 local F = {}
 
 function Save(data)
@@ -21,7 +33,6 @@ function Save(data)
 	if not success then
 		return false
 	end
-	print(encoded)
 	writefile(fullPath, encoded)
 	return true
 end
@@ -34,7 +45,6 @@ function Load()
 	if not success then return false end
 	return decoded
 end
-
 local function AddF(event,args)
 	if event == plev then
 		local tower = tostring(args[1])
@@ -50,37 +60,77 @@ local function AddF(event,args)
 	end
 end
 
-local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
-	local method = getnamecallmethod():lower()
-	if tostring(method) == "fireserver" then
-		if self == plev then --放置塔
-			local args = {...}
-			AddF(plev,args)
-		elseif self == sel then --售卖塔
-			local args = {...}
-			AddF(sel,args)
-		elseif self == up then --升级塔
-			local args = {...}
-			AddF(up,args)
-		elseif self == af then --更改攻击方式
-			local args = {...}
-			AddF(af,args)
-		elseif self == ws then --跳过波
-			local args = {...}
-			AddF(ws,args)
-		elseif self == rp then
-			Save(F)
-		elseif self == rd then
+local Window = Rayfield:CreateWindow({
+	Name = "SDHub V2.1",
+	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+	LoadingTitle = "SDHub",
+	LoadingSubtitle = "by 牢大",
+	Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+	DisableRayfieldPrompts = false,
+	DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+	ConfigurationSaving = {
+		Enabled = false,
+	},
+})
+
+if game.PlaceId == 14279724900 then --游戏内
+	local Tab = Window:CreateTab("录制", "camera") -- Title, Image
+	local Button = Tab:CreateButton({
+		Name = "开始录制\n（点击重播之后在准备页面点击）\n（录制结束后点击重播自动结束)",
+		Callback = function()
+			local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
+				local method = getnamecallmethod():lower()
+				if tostring(method) == "fireserver" then
+					if self == plev then --放置塔
+						local args = {...}
+						AddF(plev,args)
+					elseif self == sel then --售卖塔
+						local args = {...}
+						AddF(sel,args)
+					elseif self == up then --升级塔
+						local args = {...}
+						AddF(up,args)
+					elseif self == af then --更改攻击方式
+						local args = {...}
+						AddF(af,args)
+					elseif self == ws then --跳过波
+						local args = {...}
+						AddF(ws,args)
+					elseif self == rp then
+						Save(F)
+					end
+				end
+				return hook(self,...)
+			end)
+		end,
+	})
+	
+	local V = false
+	local Toggle = Tab:CreateToggle({
+		Name = "开始执行\n请在重播页面开启",
+		CurrentValue = false,
+		Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+		Callback = function(Value)
+			V = Value
 			local data = Load()
 			if data then
 				for i,v in pairs(data) do
-					print(i.."|"..tostring(v[1])..":"..tostring(v[2]).." "..tostring(v[3]).." "..tostring(v[4]).." "..tostring(v[5]).." "..tostring(unpack(v)))
+					repeat wait() until times.Value >= tonumber(v[1])
+					local cefra = v[4]:split(", ")
+					if v[2] == "placeTower" then
+						game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
+					elseif v[2] == "waveSkip" then
+						game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+					else
+						game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+					end
+					if V == false then
+						break
+					end
 				end
 			else
 				print("数据没找到")
 			end
-		end
-	end
-	return hook(self,...)
-end)
-loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+		end,
+	})
+end
