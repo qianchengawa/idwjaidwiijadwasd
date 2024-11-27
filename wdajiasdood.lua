@@ -15,6 +15,8 @@ local times = game:GetService("ReplicatedStorage").Game.Clock
 local character = game:GetService("ReplicatedStorage").Chapter
 local TowerDatasF = workspace.Scripted.TowerData
 local firsttower = nil
+local gameend = game:GetService("ReplicatedStorage")["ended         "]
+local inm = game:GetService("ReplicatedStorage")["ended         "].inMenu
 TowerDatasF.ChildAdded:Connect(function(v)
 	if not firsttower then
 		firsttower = v.Name
@@ -119,19 +121,23 @@ if game.PlaceId == 14279724900 then --游戏内
 			V = Value
 			local data = Load()
 			if data then
-				for i,v in pairs(data) do
-					repeat wait() until times.Value >= tonumber(v[1])
-					local cefra = v[4]:split(", ")
-					if v[2] == "placeTower" then
-						game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
-					elseif v[2] == "waveSkip" then
-						game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
-					else
-						game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+				while true do
+					for i,v in pairs(data) do
+						repeat wait() until gameend.Value == false and inm == false
+						repeat wait() until times.Value >= tonumber(v[1])
+						local cefra = v[4]:split(", ")
+						if v[2] == "placeTower" then
+							game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
+						elseif v[2] == "waveSkip" then
+							game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+						else
+							game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+						end
+						if V == false then
+							break
+						end
 					end
-					if V == false then
-						break
-					end
+					wait()
 				end
 			else
 				print("数据没找到")
