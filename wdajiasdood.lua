@@ -8,6 +8,8 @@ local sel = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForCh
 local up = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("UpgradeTower")
 local af = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("ChangeTowerTargetMode")
 local ws = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip")
+local slboost = game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect")
+local timestop = game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent")
 local rp = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("ReplayCore")
 local rd = game:GetService("ReplicatedStorage"):WaitForChild("GAME_START"):WaitForChild("readyButton")
 local times = game:GetService("ReplicatedStorage").Game.Clock
@@ -65,6 +67,12 @@ local function AddF(event,args)
 	elseif event == ws then
 		local blon = tostring(args[1])
 		F[#F+1] = {tostring(times.Value),event.Name,blon}
+	elseif event == slboost then
+		local boost1 = tostring(args[1])
+		local boost2 = tostring(args[2])
+		F[#F+1] = {tostring(times.Value),event.Name,boost1,boost2}
+	elseif event == timestop then
+		F[#F+1] = {tostring(times.Value),event.Name}
 	end
 end
 
@@ -200,6 +208,23 @@ if game.PlaceId == 14279724900 then --游戏内
 							})
 							Save(F)
 							inc = false
+						elseif self == slboost then
+							local args = {...}
+							Rayfield:Notify({
+								Title = "TDM",
+								Content = "编号"..tostring(args[1]).."绑定 编号"..tostring(args[2]),
+								Duration = 6.5,
+								Image = "clock",
+							})
+							AddF(slboost,args)
+						elseif self == timestop then
+							Rayfield:Notify({
+								Title = "TDM",
+								Content = "咋瓦鲁多！",
+								Duration = 6.5,
+								Image = "clock",
+							})
+							AddF(timestop)
 						end
 					end
 				end
@@ -229,6 +254,14 @@ if game.PlaceId == 14279724900 then --游戏内
 							elseif v[2] == "waveSkip" then
 								pcall(function()
 									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+								end)
+							elseif v[2] == "BoostSelect" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect"):FireServer(tonumber(tonumber(v[3]) + tonumber(firsttower) - 1),tostring(tonumber(v[4]) + tonumber(firsttower) - 1))
+								end)
+							elseif v[2] == "TimestopEvent" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
 								end)
 							else
 								pcall(function()
