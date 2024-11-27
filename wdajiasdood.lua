@@ -2,11 +2,6 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 task.spawn(function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
 end)
-local aaa = game:GetService("VirtualUser")
-game:GetService('Players').LocalPlayer.Idled:connect(function()
-	aaa:CaptureController()
-	aaa:ClickButton2(Vector2.new())
-end)
 local httpService = game:GetService("HttpService")
 local plev = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("placeTower")
 local sel = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("RemoveTower")
@@ -21,6 +16,7 @@ local TowerDatasF = workspace.Scripted.TowerData
 local firsttower = nil
 local gameend = game:GetService("ReplicatedStorage").ended
 local inm = game:GetService("ReplicatedStorage").ended.inMenu
+
 TowerDatasF.ChildAdded:Connect(function(v)
 	if not firsttower then
 		firsttower = v.Name
@@ -40,6 +36,12 @@ function Save(data)
 		return false
 	end
 	writefile(fullPath, encoded)
+	Rayfield:Notify({
+		Title = "TDM",
+		Content = "文件保存成功！\n路径位于注入器文件夹\workspace\'TDM\当前章节.json'",
+		Duration = 6.5,
+		Image = "clock",
+	})
 	return true
 end
 
@@ -80,6 +82,17 @@ local Window = Rayfield:CreateWindow({
 })
 
 if game.PlaceId == 14279724900 then --游戏内
+	local aaa = game:GetService("VirtualUser")
+	game:GetService('Players').LocalPlayer.Idled:connect(function()
+		aaa:CaptureController()
+		aaa:ClickButton2(Vector2.new())
+	end)
+	Rayfield:Notify({
+		Title = "TDM",
+		Content = "防挂机踢注入成功！",
+		Duration = 6.5,
+		Image = "clock",
+	})
 	local inc = false
 	local Tab = Window:CreateTab("主要功能", "camera") -- Title, Image
 	local Section = Tab:CreateSection("倍速")
@@ -92,7 +105,12 @@ if game.PlaceId == 14279724900 then --游戏内
 		MultipleOptions = false,
 		Callback = function(Options)
 			speed = tonumber(unpack(Options))
-			print(unpack(Options))
+			Rayfield:Notify({
+				Title = "TDM",
+				Content = "已切换为"..tostring(unpack(Options)).."倍速",
+				Duration = 6.5,
+				Image = "clock",
+			})
 		end,
 	})
 	local V1 = false
@@ -100,6 +118,21 @@ if game.PlaceId == 14279724900 then --游戏内
 		Name = "锁定倍速",
 		CurrentValue = false,
 		Callback = function(Value)
+			if Value == true then
+				Rayfield:Notify({
+					Title = "TDM",
+					Content = "已开启锁定倍速",
+					Duration = 6.5,
+					Image = "clock",
+				})
+			elseif Value == false then
+				Rayfield:Notify({
+					Title = "TDM",
+					Content = "已关闭锁定倍速",
+					Duration = 6.5,
+					Image = "clock",
+				})
+			end
 			V1 = Value
 			pcall(function()
 				while V1 do
@@ -109,7 +142,7 @@ if game.PlaceId == 14279724900 then --游戏内
 			end)
 		end,
 	})
-	
+
 	local Section = Tab:CreateSection("录制")
 	local Button = Tab:CreateButton({
 		Name = "开始录制\n（一定要点击重播之后再录制）\n（点击重播自动结束录制)",
@@ -122,19 +155,49 @@ if game.PlaceId == 14279724900 then --游戏内
 						if self == plev then --放置塔
 							local args = {...}
 							AddF(plev,args)
+							Rayfield:Notify({
+								Title = "TDM",
+								Content = "放置 "..args[1],
+								Duration = 6.5,
+								Image = "clock",
+							})
 						elseif self == sel then --售卖塔
 							local args = {...}
+							Rayfield:Notify({
+								Title = "TDM",
+								Content = "售卖塔编号: "..args[1],
+								Duration = 6.5,
+								Image = "clock",
+							})
 							AddF(sel,args)
 						elseif self == up then --升级塔
 							local args = {...}
+							Rayfield:Notify({
+								Title = "TDM",
+								Content = "升级塔编号: "..args[1],
+								Duration = 6.5,
+								Image = "clock",
+							})
 							AddF(up,args)
 						elseif self == af then --更改攻击方式
 							local args = {...}
+							Rayfield:Notify({
+								Title = "TDM",
+								Content = "更改攻击方式塔编号: "..args[1],
+								Duration = 6.5,
+								Image = "clock",
+							})
 							AddF(af,args)
 						elseif self == ws then --跳过波
 							local args = {...}
 							AddF(ws,args)
 						elseif self == rp then
+							Rayfield:Notify({
+								Title = "TDM",
+								Content = "检测到录制结束，尝试保存文件",
+								Duration = 6.5,
+								Image = "clock",
+							})
 							Save(F)
 							inc = false
 						end
