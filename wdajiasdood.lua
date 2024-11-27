@@ -50,6 +50,7 @@ function Save(data)
 	if not success then
 		return false
 	end
+	print(encoded)
 	writefile(fullPath, encoded)
 	return true
 end
