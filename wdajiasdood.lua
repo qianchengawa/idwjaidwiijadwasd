@@ -1,4 +1,17 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Window = Rayfield:CreateWindow({
+	Name = "TDM V9.05",
+	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+	LoadingTitle = "TowerDefenseMacro",
+	LoadingSubtitle = "by 牢大",
+	Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+	DisableRayfieldPrompts = false,
+	DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+	ConfigurationSaving = {
+		Enabled = false,
+	},
+})
+
 task.spawn(function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
 end)
@@ -77,20 +90,6 @@ local function AddF(event,args)
 		F[#F+1] = {tostring(times.Value),event.Name}
 	end
 end
-
-local Window = Rayfield:CreateWindow({
-	Name = "TDM V9.05",
-	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-	LoadingTitle = "TowerDefenseMacro",
-	LoadingSubtitle = "by 牢大",
-	Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
-	DisableRayfieldPrompts = false,
-	DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
-	ConfigurationSaving = {
-		Enabled = false,
-	},
-})
-
 if game.PlaceId == 14279724900 then --游戏内
 	local aaa = game:GetService("VirtualUser")
 	pcall(function()
