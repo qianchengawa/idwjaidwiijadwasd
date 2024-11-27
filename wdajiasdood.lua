@@ -63,9 +63,9 @@ local function AddF(event,args)
 end
 
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V0.7",
+	Name = "SDHub V2.1",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-	LoadingTitle = "TowerDefenseMacro",
+	LoadingTitle = "SDHub",
 	LoadingSubtitle = "by 牢大",
 	Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 	DisableRayfieldPrompts = false,
@@ -126,17 +126,24 @@ if game.PlaceId == 14279724900 then --游戏内
 						for i,v in pairs(data) do
 							repeat wait() until times.Value >= tonumber(v[1])
 							if v[2] == "placeTower" then
-								local cefra = v[4]:split(", ")
-								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
+								pcall(function()
+									local cefra = v[4]:split(", ")
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
+								end)
 							elseif v[2] == "waveSkip" then
-								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+								end)
 							else
-								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+								end)
 							end
 							if V == false or gameend.Value == true then
 								break
 							end
 						end
+						repeat wait() until gameend.Value == true
 					else
 						rp:FireServer()
 						wait(.1)
