@@ -167,7 +167,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							AddF(plev,args)
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "放置 "..args[1],
+								Content = "放置 "..tostring(args[1]),
 								Duration = 6.5,
 								Image = "clock",
 							})
@@ -175,7 +175,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							local args = {...}
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "售卖塔编号: "..args[1],
+								Content = "售卖塔编号: "..tostring(args[1]),
 								Duration = 6.5,
 								Image = "clock",
 							})
@@ -184,7 +184,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							local args = {...}
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "升级塔编号: "..args[1],
+								Content = "升级塔编号: "..tostring(args[1]),
 								Duration = 6.5,
 								Image = "clock",
 							})
@@ -193,7 +193,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							local args = {...}
 							Rayfield:Notify({
 								Title = "TDM",
-								Content = "更改攻击方式塔编号: "..args[1],
+								Content = "更改攻击方式塔编号: "..tostring(args[1]),
 								Duration = 6.5,
 								Image = "clock",
 							})
