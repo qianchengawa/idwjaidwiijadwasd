@@ -133,10 +133,14 @@ if game.PlaceId == 14279724900 then --游戏内
 							else
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
 							end
-							if V == false or gameend.Value == true then
+							if V == false then
+								break
+							end
+							if gameend.Value == false then
 								rp:FireServer()
 								wait(.1)
 								rd:FireServer()
+								wait(0.5)
 								break
 							end
 						end
