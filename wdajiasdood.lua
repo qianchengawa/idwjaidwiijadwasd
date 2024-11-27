@@ -111,7 +111,7 @@ if game.PlaceId == 14279724900 then --游戏内
 			end)
 		end,
 	})
-	
+
 	local V = false
 	local Toggle = Tab:CreateToggle({
 		Name = "开始执行\n请在重播页面开启",
@@ -121,20 +121,21 @@ if game.PlaceId == 14279724900 then --游戏内
 			V = Value
 			local data = Load()
 			if data then
-				while true do
-					if V == true then
-						task.spawn(function()
-							while true do
-								repeat wait() until gameend.Value == true
-								rp:FireServer()
-								rd:FireServer()
-								if V == false then
-									break
-								end
+				while V do
+					task.spawn(function()
+						while true do
+							repeat wait() until gameend.Value == true
+							rp:FireServer()
+							wait(.1)
+							rd:FireServer()
+							if V == false then
+								break
 							end
-						end)
+						end
+					end)
+					if gameend.Value == false then
 						for i,v in pairs(data) do
-							repeat wait() until gameend.Value == false and times.Value >= tonumber(v[1])
+							repeat wait() until times.Value >= tonumber(v[1])
 							if v[2] == "placeTower" then
 								local cefra = v[4]:split(", ")
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
@@ -143,14 +144,12 @@ if game.PlaceId == 14279724900 then --游戏内
 							else
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
 							end
-							if V == false then
+							if V == false or gameend.Value == false then
 								break
 							end
 						end
-						wait()
-					else
-						break
 					end
+					wait()
 				end
 			else
 				print("数据没找到")
