@@ -70,7 +70,10 @@ local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
 		elseif self == rp then
 			Save(F)
 		elseif self == rd then
-			print("玩家准备")
+			local data = Load()
+			for i,v in pairs(data) do
+				print(i..v[1]..v[2] or "Nil"..v[3] or "Nil"..v[4] or "NIl"..v[5] or "Nil"..v or "Nil")
+			end
 		end
 	end
 	return hook(self,...)
