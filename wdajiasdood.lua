@@ -77,9 +77,36 @@ local Window = Rayfield:CreateWindow({
 
 if game.PlaceId == 14279724900 then --游戏内
 	local inc = false
-	local Tab = Window:CreateTab("录制", "camera") -- Title, Image
+	local Tab = Window:CreateTab("主要功能", "camera") -- Title, Image
+	local Section = Tab:CreateSection("倍速")
+
+	local speed = 5
+	local Dropdown = Tab:CreateDropdown({
+		Name = "选择倍速",
+		Options = {"1","2", "3", "4", "5"},
+		CurrentOption = {"5"},
+		MultipleOptions = false,
+		Callback = function(Options)
+			speed = tonumber(unpack(Options))
+			print(unpack(Options))
+		end,
+	})
+	local V = false
+	local Toggle = Tab:CreateToggle({
+		Name = "锁定倍速",
+		CurrentValue = false,
+		Callback = function(Value)
+			V = Value
+			pcall(function()
+				repeat wait() until game:GetService("ReplicatedStorage"):WaitForChild("Game"):WaitForChild("Speed").Value ~= speed
+				game:GetService("ReplicatedStorage"):WaitForChild("Game"):WaitForChild("Speed"):WaitForChild("Change"):FireServer(tonumber(speed))
+			end)
+		end,
+	})
+	
+	local Section = Tab:CreateSection("录制")
 	local Button = Tab:CreateButton({
-		Name = "开始录制\n（点击重播之后在准备页面点击）\n（录制结束后点击重播自动结束)",
+		Name = "开始录制\n（一定要点击重播之后再录制）\n（点击重播自动结束录制)",
 		Callback = function()
 			inc = true
 			local hook; hook = hookmetamethod(game,"__namecall",function(self,...)
