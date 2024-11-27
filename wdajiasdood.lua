@@ -40,7 +40,7 @@ function Save(data)
 	writefile(fullPath, encoded)
 	Rayfield:Notify({
 		Title = "TDM",
-		Content = "文件保存成功！\n路径位于注入器文件夹\workspace\'TDM\当前章节.json'",
+		Content = [[文件保存成功！\n路径位于注入器文件夹\workspace\'TDM\当前章节.json']],
 		Duration = 6.5,
 		Image = "clock",
 	})
@@ -91,9 +91,11 @@ local Window = Rayfield:CreateWindow({
 
 if game.PlaceId == 14279724900 then --游戏内
 	local aaa = game:GetService("VirtualUser")
-	game:GetService('Players').LocalPlayer.Idled:connect(function()
-		aaa:CaptureController()
-		aaa:ClickButton2(Vector2.new())
+	pcall(function()
+		game:GetService('Players').LocalPlayer.Idled:connect(function()
+			aaa:CaptureController()
+			aaa:ClickButton2(Vector2.new())
+		end)
 	end)
 	Rayfield:Notify({
 		Title = "TDM",
