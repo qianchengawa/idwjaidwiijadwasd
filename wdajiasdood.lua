@@ -123,14 +123,11 @@ if game.PlaceId == 14279724900 then --游戏内
 			if data then
 				while V do
 					task.spawn(function()
-						while true do
+						while V do
 							repeat wait() until gameend.Value == true
 							rp:FireServer()
 							wait(.1)
 							rd:FireServer()
-							if V == false then
-								break
-							end
 						end
 					end)
 					if gameend.Value == false then
