@@ -148,7 +148,7 @@ if game.PlaceId == 14279724900 then --游戏内
 						times.Value = 0
 						rp:FireServer()
 						wait(1)
-						rd:FireServer()
+						rd:FireServer(game:GetService("Players").LocalPlayer)
 					end
 					wait()
 				end
