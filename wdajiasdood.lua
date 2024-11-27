@@ -39,13 +39,13 @@ local function AddF(event,args)
 		local tower = tostring(args[1])
 		local placeCframe = tostring(args[2])
 		local idkblon = tostring(args[3])
-		F[#F+1] = {tostring(times.Value),event.Name,tower,placeCframe,idkblon}
+		F[#F+1] = {[tostring(times.Value)] = event.Name,tower,placeCframe,idkblon}
 	elseif (event == sel or event == up or event == af)  then
 		local towerID = tostring(args[1])
-		F[#F+1] = {tostring(times.Value),event.Name,towerID}
+		F[#F+1] = {[tostring(times.Value)] = event.Name,towerID}
 	elseif event == ws then
 		local blon = tostring(args[1])
-		F[#F+1] = {tostring(times.Value),event.Name,blon}
+		F[#F+1] = {[tostring(times.Value)] = event.Name,blon}
 	end
 end
 
