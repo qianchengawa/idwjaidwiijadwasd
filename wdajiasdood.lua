@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.03",
+	Name = "TDM V2.021",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -227,11 +227,10 @@ if game.PlaceId == 14279724900 then --游戏内
 			end
 		end,
 	})
-elseif game.PlaceId == 14279693118 then
+elseif game.PlaceId == 14279693118 then --大厅
 	local Tab = Window:CreateTab("主要功能", "camera") -- Title, Image
 	local Section = Tab:CreateSection("保存塔")
-	
-	local slc = 1
+	local slc = "1"
 	local Dropdown = Tab:CreateDropdown({
 		Name = "选择槽位",
 		Options = {"1","2","3","4","5","6","7","8","9","10"},
