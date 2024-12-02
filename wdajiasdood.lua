@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.02",
+	Name = "TDM V2.03",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -11,6 +11,8 @@ local Window = Rayfield:CreateWindow({
 		Enabled = false,
 	},
 })
+local player = game:GetService("Players").LocalPlayer
+local SaveAbb = {"Eq1","Eq2","Eq3","Eq4","Eq5","Eq6","Eq7","Eq8","Eq9","Eq10"}
 --
 task.spawn(function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
@@ -44,8 +46,13 @@ TowerDatasF.ChildRemoved:Connect(function()
 end)
 local F = {}
 
-function Save(data)
-	local fullPath = [[TDM/]]..string.gsub(character.Value," ","")..".json"
+function Save(data,folder,savec)
+	local fullPath
+	if folder then
+		fullPath = [[TDM/]]..folder.."/"..tostring(savec)..".json"
+	else
+		fullPath = [[TDM/]]..string.gsub(character.Value," ","")..".json"
+	end
 	local success, encoded = pcall(httpService.JSONEncode, httpService, data)
 	if not success then
 		return false
@@ -55,8 +62,13 @@ function Save(data)
 	return true
 end
 
-function Load()
-	local file = [[TDM/]]..string.gsub(character.Value," ","")..".json"
+function Load(folder,savec)
+	local file
+	if folder then
+		file = [[TDM/]]..folder.."/"..tostring(savec)..".json"
+	else
+		file = [[TDM/]]..string.gsub(character.Value," ","")..".json"
+	end
 	if not isfile(file) then return false end
 
 	local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
@@ -150,7 +162,7 @@ if game.PlaceId == 14279724900 then --游戏内
 						elseif self == timestop then
 							AddF(timestop)
 						elseif self == rp then
-							Save(F)
+							Save(F,"Character")
 							inc = false
 						end
 					end
@@ -167,7 +179,7 @@ if game.PlaceId == 14279724900 then --游戏内
 		Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 		Callback = function(Value)
 			V = Value
-			local data = Load()
+			local data = Load("Character")
 			if data then
 				while V do
 					if gameend.Value == false then
@@ -212,6 +224,50 @@ if game.PlaceId == 14279724900 then --游戏内
 				end
 			else
 				print("数据没找到")
+			end
+		end,
+	})
+elseif game.PlaceId == 14279693118 then
+	local Tab = Window:CreateTab("主要功能", "camera") -- Title, Image
+	local Section = Tab:CreateSection("保存塔")
+	
+	local slc = 1
+	local Dropdown = Tab:CreateDropdown({
+		Name = "选择槽位",
+		Options = {"1","2","3","4","5","6","7","8","9","10"},
+		CurrentOption = {"1"},
+		MultipleOptions = false,
+		Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+		Callback = function(Options)
+			slc = unpack(Options)
+		end,
+	})
+	local Button = Tab:CreateButton({
+		Name = "保存当前装备的塔到该槽位",
+		Callback = function()
+			local eq = {}
+			for i,v in pairs(SaveAbb) do
+				eq[v] = player:GetAttribute(v)
+			end
+			Save(eq,"SaveTowers",slc)
+		end,
+	})
+	local Button = Tab:CreateButton({
+		Name = "加载当前槽位保存的塔",
+		Callback = function()
+			local data = Load("SaveTowers",slc)
+			if data then
+				for i,v in pairs(SaveAbb) do
+					game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("equipID"):FireServer(player:GetAttribute(v),false)
+					game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("equipID"):FireServer(data[v],true)
+				end
+			else
+				Rayfield:Notify({
+					Title = "TDM",
+					Content = "该槽位没有数据！",
+					Duration = 6.5,
+					Image = 4483362458,
+				})
 			end
 		end,
 	})
