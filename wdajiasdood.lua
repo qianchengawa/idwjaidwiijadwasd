@@ -182,6 +182,12 @@ if game.PlaceId == 14279724900 then --游戏内
 			if data then
 				while V do
 					for i,v in pairs(data) do
+						if V == false then
+							return
+						end
+						if gameend.Value == true then
+							break
+						end
 						repeat wait() until times.Value >= tonumber(v[1])
 						if v[2] == "placeTower" then
 							pcall(function()
@@ -204,12 +210,6 @@ if game.PlaceId == 14279724900 then --游戏内
 							pcall(function()
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
 							end)
-						end
-						if V == false then
-							return
-						end
-						if gameend.Value == true then
-							break
 						end
 						wait()
 					end
