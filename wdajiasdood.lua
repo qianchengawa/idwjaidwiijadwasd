@@ -70,7 +70,7 @@ if game.PlaceId == 14279724900 then --游戏内
 		end
 	end)
 	local F = {}
-	
+
 	local function AddF(event,args)
 		if event == plev then
 			local tower = tostring(args[1])
@@ -91,7 +91,7 @@ if game.PlaceId == 14279724900 then --游戏内
 			F[#F+1] = {tostring(times.Value),event.Name}
 		end
 	end
-	
+
 	task.spawn(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
 	end)
@@ -181,45 +181,44 @@ if game.PlaceId == 14279724900 then --游戏内
 			local data = Load(character.Value)
 			if data then
 				while V do
-					if gameend.Value == false then
-						for i,v in pairs(data) do
-							repeat wait() until times.Value >= tonumber(v[1])
-							if v[2] == "placeTower" then
-								pcall(function()
-									local cefra = v[4]:split(", ")
-									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
-								end)
-							elseif v[2] == "waveSkip" then
-								pcall(function()
-									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
-								end)
-							elseif v[2] == "BoostSelect" then
-								pcall(function()
-									game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect"):FireServer(tonumber(tonumber(v[3]) + tonumber(firsttower) - 1),tostring(tonumber(v[4]) + tonumber(firsttower) - 1))
-								end)
-							elseif v[2] == "TimestopEvent" then
-								pcall(function()
-									game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
-								end)
-							else
-								pcall(function()
-									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
-								end)
-							end
-							if V == false or gameend.Value == true then
-								break
-							end
-							wait()
+					for i,v in pairs(data) do
+						repeat wait() until times.Value >= tonumber(v[1])
+						if v[2] == "placeTower" then
+							pcall(function()
+								local cefra = v[4]:split(", ")
+								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
+							end)
+						elseif v[2] == "waveSkip" then
+							pcall(function()
+								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+							end)
+						elseif v[2] == "BoostSelect" then
+							pcall(function()
+								game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect"):FireServer(tonumber(tonumber(v[3]) + tonumber(firsttower) - 1),tostring(tonumber(v[4]) + tonumber(firsttower) - 1))
+							end)
+						elseif v[2] == "TimestopEvent" then
+							pcall(function()
+								game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
+							end)
+						else
+							pcall(function()
+								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+							end)
 						end
-						repeat wait() until gameend.Value == true
-						times.Value = 0
-					else
-						times.Value = 0
-						wait(.1)
-						rp:FireServer()
-						repeat wait() until gameend.Value == false
-						rd:FireServer(game:GetService("Players").LocalPlayer)
+						if V == false then
+							return
+						end
+						if gameend.Value == true then
+							break
+						end
+						wait()
 					end
+					repeat wait() until gameend.Value == true
+					times.Value = 0
+					wait(.1)
+					rp:FireServer()
+					repeat wait() until gameend.Value == false
+					rd:FireServer(game:GetService("Players").LocalPlayer)
 				end
 			else
 				print("数据没找到")
@@ -231,9 +230,9 @@ elseif game.PlaceId == 14279693118 then --大厅
 	local SaveAbb = {"Eq1","Eq2","Eq3","Eq4","Eq5","Eq6","Eq7","Eq8","Eq9","Eq10"}
 	local Tab = Window:CreateTab("主要功能", "camera") -- Title, Image
 	local Section = Tab:CreateSection("保存塔")
-	
+
 	local slc = "1"
-	
+
 	local Dropdown = Tab:CreateDropdown({
 		Name = "选择槽位",
 		Options = {"1","2","3","4","5","6","7","8","9","10"},
@@ -244,7 +243,7 @@ elseif game.PlaceId == 14279693118 then --大厅
 			slc = unpack(Options)
 		end,
 	})
-	
+
 	local Button = Tab:CreateButton({
 		Name = "保存当前装备的塔到该槽位",
 		Callback = function()
@@ -255,7 +254,7 @@ elseif game.PlaceId == 14279693118 then --大厅
 			Save(eq,slc,"SaveTowers")
 		end,
 	})
-	
+
 	local Button = Tab:CreateButton({
 		Name = "加载当前槽位保存的塔",
 		Callback = function()
