@@ -45,7 +45,7 @@ end)
 local F = {}
 
 function Save(data)
-	local fullPath = [[TDM\]]..character.Value..".json"
+	local fullPath = [[/TDM/]]..string.gsub(character.Value," ","")..".json"
 	local success, encoded = pcall(httpService.JSONEncode, httpService, data)
 	if not success then
 		return false
@@ -56,7 +56,7 @@ function Save(data)
 end
 
 function Load()
-	local file = [[TDM\]]..character.Value..".json"
+	local file = [[/TDM/]]..string.gsub(character.Value," ","")..".json"
 	if not isfile(file) then return false end
 
 	local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
