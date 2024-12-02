@@ -213,7 +213,7 @@ if game.PlaceId == 14279724900 then --游戏内
 						end
 						wait()
 					end
-					repeat wait() until gameend.Value == true
+					repeat game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true) wait(0.1) until gameend.Value == true
 					times.Value = 0
 					repeat 
 						rp:FireServer()
