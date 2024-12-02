@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.031",
+	Name = "TDM V2.04",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -11,47 +11,14 @@ local Window = Rayfield:CreateWindow({
 		Enabled = false,
 	},
 })
-local player = game:GetService("Players").LocalPlayer
-local SaveAbb = {"Eq1","Eq2","Eq3","Eq4","Eq5","Eq6","Eq7","Eq8","Eq9","Eq10"}
---
-task.spawn(function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
-end)
 local httpService = game:GetService("HttpService")
-local plev = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("placeTower")
-local sel = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("RemoveTower")
-local up = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("UpgradeTower")
-local af = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("ChangeTowerTargetMode")
-local ws = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip")
-local slboost = game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect")
-local timestop = game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent")
-local rp = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("ReplayCore")
-local rd = game:GetService("ReplicatedStorage"):WaitForChild("GAME_START"):WaitForChild("readyButton")
-local times = game:GetService("ReplicatedStorage").Game.Clock
-local character = game:GetService("ReplicatedStorage").Chapter
-local TowerDatasF = workspace.Scripted.TowerData
-local firsttower = nil
-local gameend = game:GetService("ReplicatedStorage").ended
-local inm = game:GetService("ReplicatedStorage").ended.inMenu
 
-TowerDatasF.ChildAdded:Connect(function(v)
-	if not firsttower then
-		firsttower = v.Name
-	end
-end)
-TowerDatasF.ChildRemoved:Connect(function()
-	if not TowerDatasF:GetChildren()[1] then
-		firsttower = nil
-	end
-end)
-local F = {}
-
-function Save(data,folder,savec)
+function Save(data,name,folder)
 	local fullPath
 	if folder then
-		fullPath = [[TDM/]]..folder.."/"..tostring(savec)..".json"
+		fullPath = [[TDM/]]..folder.."/"..tostring(name)..".json"
 	else
-		fullPath = [[TDM/]]..string.gsub(character.Value," ","")..".json"
+		fullPath = [[TDM/]]..string.gsub(name," ","")..".json"
 	end
 	local success, encoded = pcall(httpService.JSONEncode, httpService, data)
 	if not success then
@@ -62,12 +29,12 @@ function Save(data,folder,savec)
 	return true
 end
 
-function Load(folder,savec)
+function Load(name,folder)
 	local file
 	if folder then
-		file = [[TDM/]]..folder.."/"..tostring(savec)..".json"
+		file = [[TDM/]]..folder.."/"..tostring(name)..".json"
 	else
-		file = [[TDM/]]..string.gsub(character.Value," ","")..".json"
+		file = [[TDM/]]..string.gsub(name," ","")..".json"
 	end
 	if not isfile(file) then return false end
 
@@ -75,27 +42,59 @@ function Load(folder,savec)
 	if not success then return false end
 	return decoded
 end
-local function AddF(event,args)
-	if event == plev then
-		local tower = tostring(args[1])
-		local placeCframe = tostring(args[2])
-		local idkblon = tostring(args[3])
-		F[#F+1] = {tostring(times.Value),event.Name,tower,placeCframe,idkblon}
-	elseif (event == sel or event == up or event == af)  then
-		local towerID = tostring(args[1])
-		F[#F+1] = {tostring(times.Value),event.Name,towerID}
-	elseif event == ws then
-		local blon = tostring(args[1])
-		F[#F+1] = {tostring(times.Value),event.Name,blon}
-	elseif event == slboost then
-		local boost1 = tostring(args[1])
-		local boost2 = tostring(args[2])
-		F[#F+1] = {tostring(times.Value),event.Name,tostring(boost1),tostring(boost2)}
-	elseif event == timestop then
-		F[#F+1] = {tostring(times.Value),event.Name}
-	end
-end
 if game.PlaceId == 14279724900 then --游戏内
+	local plev = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("placeTower")
+	local sel = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("RemoveTower")
+	local up = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("UpgradeTower")
+	local af = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("ChangeTowerTargetMode")
+	local ws = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip")
+	local slboost = game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect")
+	local timestop = game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent")
+	local rp = game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("ReplayCore")
+	local rd = game:GetService("ReplicatedStorage"):WaitForChild("GAME_START"):WaitForChild("readyButton")
+	local times = game:GetService("ReplicatedStorage").Game.Clock
+	local character = game:GetService("ReplicatedStorage").Chapter
+	local TowerDatasF = workspace.Scripted.TowerData
+	local firsttower = nil
+	local gameend = game:GetService("ReplicatedStorage").ended
+	local inm = game:GetService("ReplicatedStorage").ended.inMenu
+
+	TowerDatasF.ChildAdded:Connect(function(v)
+		if not firsttower then
+			firsttower = v.Name
+		end
+	end)
+	TowerDatasF.ChildRemoved:Connect(function()
+		if not TowerDatasF:GetChildren()[1] then
+			firsttower = nil
+		end
+	end)
+	local F = {}
+	
+	local function AddF(event,args)
+		if event == plev then
+			local tower = tostring(args[1])
+			local placeCframe = tostring(args[2])
+			local idkblon = tostring(args[3])
+			F[#F+1] = {tostring(times.Value),event.Name,tower,placeCframe,idkblon}
+		elseif (event == sel or event == up or event == af)  then
+			local towerID = tostring(args[1])
+			F[#F+1] = {tostring(times.Value),event.Name,towerID}
+		elseif event == ws then
+			local blon = tostring(args[1])
+			F[#F+1] = {tostring(times.Value),event.Name,blon}
+		elseif event == slboost then
+			local boost1 = tostring(args[1])
+			local boost2 = tostring(args[2])
+			F[#F+1] = {tostring(times.Value),event.Name,tostring(boost1),tostring(boost2)}
+		elseif event == timestop then
+			F[#F+1] = {tostring(times.Value),event.Name}
+		end
+	end
+	
+	task.spawn(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
+	end)
 	local aaa = game:GetService("VirtualUser")
 	pcall(function()
 		game:GetService('Players').LocalPlayer.Idled:connect(function()
@@ -162,7 +161,7 @@ if game.PlaceId == 14279724900 then --游戏内
 						elseif self == timestop then
 							AddF(timestop)
 						elseif self == rp then
-							Save(F,"Character")
+							Save(F,character.Value)
 							inc = false
 						end
 					end
@@ -179,7 +178,7 @@ if game.PlaceId == 14279724900 then --游戏内
 		Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 		Callback = function(Value)
 			V = Value
-			local data = Load("Character")
+			local data = Load(character.Value)
 			if data then
 				while V do
 					if gameend.Value == false then
@@ -228,9 +227,13 @@ if game.PlaceId == 14279724900 then --游戏内
 		end,
 	})
 elseif game.PlaceId == 14279693118 then --大厅
+	local player = game:GetService("Players").LocalPlayer
+	local SaveAbb = {"Eq1","Eq2","Eq3","Eq4","Eq5","Eq6","Eq7","Eq8","Eq9","Eq10"}
 	local Tab = Window:CreateTab("主要功能", "camera") -- Title, Image
 	local Section = Tab:CreateSection("保存塔")
+	
 	local slc = "1"
+	
 	local Dropdown = Tab:CreateDropdown({
 		Name = "选择槽位",
 		Options = {"1","2","3","4","5","6","7","8","9","10"},
@@ -241,6 +244,7 @@ elseif game.PlaceId == 14279693118 then --大厅
 			slc = unpack(Options)
 		end,
 	})
+	
 	local Button = Tab:CreateButton({
 		Name = "保存当前装备的塔到该槽位",
 		Callback = function()
@@ -248,25 +252,21 @@ elseif game.PlaceId == 14279693118 then --大厅
 			for i,v in pairs(SaveAbb) do
 				eq[v] = player:GetAttribute(v)
 			end
-			Save(eq,"SaveTowers",slc)
+			Save(eq,slc,"SaveTowers")
 		end,
 	})
+	
 	local Button = Tab:CreateButton({
 		Name = "加载当前槽位保存的塔",
 		Callback = function()
-			local data = Load("SaveTowers",slc)
+			local data = Load(slc,"SaveTowers")
 			if data then
 				for i,v in pairs(SaveAbb) do
-					game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("equipID"):FireServer(player:GetAttribute(v),false)
-					game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("equipID"):FireServer(data[v],true)
+					pcall(function()
+						game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("equipID"):FireServer(player:GetAttribute(v),false)
+						game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("equipID"):FireServer(data[v],true)
+					end)
 				end
-			else
-				Rayfield:Notify({
-					Title = "TDM",
-					Content = "该槽位没有数据！",
-					Duration = 6.5,
-					Image = 4483362458,
-				})
 			end
 		end,
 	})
