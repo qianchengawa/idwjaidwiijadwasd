@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.01",
+	Name = "TDM V2.02",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -204,9 +204,9 @@ if game.PlaceId == 14279724900 then --游戏内
 						times.Value = 0
 					else
 						times.Value = 0
-						wait(.5)
+						wait(.1)
 						rp:FireServer()
-						wait(.5)
+						repeat wait() until gameend.Value == false
 						rd:FireServer(game:GetService("Players").LocalPlayer)
 					end
 				end
