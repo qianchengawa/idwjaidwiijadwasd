@@ -198,7 +198,7 @@ if game.PlaceId == 14279724900 then --游戏内
 							if V == false or gameend.Value == true then
 								break
 							end
-							repeat wait() until gameend.Value == false
+							wait()
 						end
 						repeat wait() until gameend.Value == true
 						times.Value = 0
