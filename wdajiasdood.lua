@@ -198,13 +198,15 @@ if game.PlaceId == 14279724900 then --游戏内
 							if V == false or gameend.Value == true then
 								break
 							end
+							repeat wait() until gameend.Value == false
 						end
 						repeat wait() until gameend.Value == true
 						times.Value = 0
 					else
 						times.Value = 0
+						wait(.5)
 						rp:FireServer()
-						wait(1)
+						wait(.5)
 						rd:FireServer(game:GetService("Players").LocalPlayer)
 					end
 				end
