@@ -203,9 +203,8 @@ if game.PlaceId == 14279724900 then --游戏内
 								repeat
 									if gameend.Value == true then
 										break
-									else
-										wait()
 									end
+									wait()
 								until times.Value >= tonumber(v[1]) and gameend.Value == false
 								if v[2] == "placeTower" then
 									pcall(function()
