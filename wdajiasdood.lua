@@ -184,14 +184,17 @@ if game.PlaceId == 14279724900 then --游戏内
 					pcall(function()
 						for i,v in pairs(data) do
 							repeat
-								if gameend.Value == true then
-									break
-								end
 								if V == false then
 									return
 								end
+								if gameend.Value == true then
+									break
+								end
 								wait()
 							until times.Value >= tonumber(v[1]) and gameend.Value == false
+							if gameend.Value == true then
+								break
+							end
 							if v[2] == "placeTower" then
 								pcall(function()
 									local cefra = v[4]:split(", ")
@@ -218,7 +221,13 @@ if game.PlaceId == 14279724900 then --游戏内
 						end
 					end)
 					pcall(function()
-						repeat game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true)  wait(0.1) until gameend.Value == true
+						repeat 
+							if V == false then
+								return
+							end
+							game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true)  
+							wait(0.1)
+						until gameend.Value == true
 						if gameend.Value == true then
 							pcall(function()
 								times.Value = 0
@@ -231,11 +240,6 @@ if game.PlaceId == 14279724900 then --游戏内
 									wait()
 								until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
 							end)
-						end
-					end)
-					pcall(function()
-						if V == false then
-							return
 						end
 					end)
 					wait()
