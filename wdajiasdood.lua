@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.045",
+	Name = "TDM V2.047",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -181,53 +181,61 @@ if game.PlaceId == 14279724900 then --游戏内
 			local data = Load(character.Value)
 			if data then
 				while V do
-					for i,v in pairs(data) do
+					pcall(function()
+						for i,v in pairs(data) do
+							if V == false then
+								return
+							end
+							if gameend.Value == true then
+								break
+							end
+							repeat wait() until times.Value >= tonumber(v[1]) and gameend.Value == false
+							if v[2] == "placeTower" then
+								pcall(function()
+									local cefra = v[4]:split(", ")
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
+								end)
+							elseif v[2] == "waveSkip" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+								end)
+							elseif v[2] == "BoostSelect" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect"):FireServer(tonumber(tonumber(v[3]) + tonumber(firsttower) - 1),tostring(tonumber(v[4]) + tonumber(firsttower) - 1))
+								end)
+							elseif v[2] == "TimestopEvent" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
+								end)
+							else
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+								end)
+							end
+							wait()
+						end
+					end)
+					pcall(function()
 						if V == false then
 							return
 						end
-						if gameend.Value == true then
-							break
-						end
-						repeat wait() until times.Value >= tonumber(v[1]) and gameend.Value == false
-						if v[2] == "placeTower" then
-							pcall(function()
-								local cefra = v[4]:split(", ")
-								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
-							end)
-						elseif v[2] == "waveSkip" then
-							pcall(function()
-								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
-							end)
-						elseif v[2] == "BoostSelect" then
-							pcall(function()
-								game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect"):FireServer(tonumber(tonumber(v[3]) + tonumber(firsttower) - 1),tostring(tonumber(v[4]) + tonumber(firsttower) - 1))
-							end)
-						elseif v[2] == "TimestopEvent" then
-							pcall(function()
-								game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
-							end)
-						else
-							pcall(function()
-								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
-							end)
-						end
-						wait()
-					end
-					if V == false then
-						return
-					end
+					end)
 					pcall(function()
 						if gameend.Value == true then
-							repeat 
-								rp:FireServer()
-								wait()
-							until gameend.Value == false
-							repeat
-								rd:FireServer(game:GetService("Players").LocalPlayer)
-								wait()
-							until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
+							pcall(function()
+								repeat 
+									rp:FireServer()
+									wait()
+								until gameend.Value == false
+								repeat
+									rd:FireServer(game:GetService("Players").LocalPlayer)
+									wait()
+								until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
+							end)
 						else
-							game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true) wait(0.1)
+							pcall(function()
+								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true) wait(0.1)
+							end)
 						end
 						times.Value = 0
 					end)
