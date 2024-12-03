@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.044",
+	Name = "TDM V2.045",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -188,7 +188,7 @@ if game.PlaceId == 14279724900 then --游戏内
 						if gameend.Value == true then
 							break
 						end
-						repeat wait() until times.Value >= tonumber(v[1])
+						repeat wait() until times.Value >= tonumber(v[1]) and gameend.Value == false
 						if v[2] == "placeTower" then
 							pcall(function()
 								local cefra = v[4]:split(", ")
