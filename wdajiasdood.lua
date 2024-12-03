@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.045",
+	Name = "TDM V2.048",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -180,14 +180,15 @@ if game.PlaceId == 14279724900 then --游戏内
 			V = Value
 			local data = Load(character.Value)
 			if data then
-				task.spawn(function()
-					while V do
-						if V == false then
-							return
-						end
-						pcall(function()
+				while V do
+					pcall(function()
+						for i,v in pairs(data) do
+							if V == false then
+								return
+							end
 							if gameend.Value == true then
 								pcall(function()
+									times.Value = 0
 									repeat 
 										rp:FireServer()
 										wait()
@@ -197,19 +198,6 @@ if game.PlaceId == 14279724900 then --游戏内
 										wait()
 									until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
 								end)
-							end
-							times.Value = 0
-						end)
-						wait()
-					end
-				end)
-				while V do
-					pcall(function()
-						for i,v in pairs(data) do
-							if V == false then
-								return
-							end
-							if gameend.Value == true then
 								break
 							end
 							repeat wait() until times.Value >= tonumber(v[1]) and gameend.Value == false
@@ -239,19 +227,31 @@ if game.PlaceId == 14279724900 then --游戏内
 						end
 					end)
 					pcall(function()
-						if gameend.Value == false then
+						if gameend.Value == true then
+							pcall(function()
+								times.Value = 0
+								repeat 
+									rp:FireServer()
+									wait()
+								until gameend.Value == false
+								repeat
+									rd:FireServer(game:GetService("Players").LocalPlayer)
+									wait()
+								until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
+							end)
+						else
 							pcall(function()
 								game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true) 
 								wait(0.1)
 							end)
 						end
-						times.Value = 0
 					end)
 					pcall(function()
 						if V == false then
 							return
 						end
 					end)
+					wait()
 				end
 			else
 				print("数据没找到")
