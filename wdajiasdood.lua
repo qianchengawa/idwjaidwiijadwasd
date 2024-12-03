@@ -217,17 +217,21 @@ if game.PlaceId == 14279724900 then --游戏内
 						return
 					end
 					pcall(function()
-						repeat game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true) wait(0.1) until gameend.Value == true
+						if gameend.Value == true then
+							repeat 
+								rp:FireServer()
+								wait()
+							until gameend.Value == false
+							repeat
+								rd:FireServer(game:GetService("Players").LocalPlayer)
+								wait()
+							until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
+						else
+							game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("waveSkip"):FireServer(true) wait(0.1)
+						end
 						times.Value = 0
-						repeat 
-							rp:FireServer()
-							wait()
-						until gameend.Value == false
-						repeat
-							rd:FireServer(game:GetService("Players").LocalPlayer)
-							wait()
-						until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
 					end)
+					wait()
 				end
 			else
 				print("数据没找到")
