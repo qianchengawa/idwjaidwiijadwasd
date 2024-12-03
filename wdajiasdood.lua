@@ -183,42 +183,38 @@ if game.PlaceId == 14279724900 then --游戏内
 				while true do
 					pcall(function()
 						for i,v in pairs(data) do
-							if V == false then
-								return
-							end
-							if gameend.Value == true then
-								break
-							else
-								repeat
-									if gameend.Value == true then
-										break
-									end
-									wait()
-								until times.Value >= tonumber(v[1]) and gameend.Value == false
-								if v[2] == "placeTower" then
-									pcall(function()
-										local cefra = v[4]:split(", ")
-										game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
-									end)
-								elseif v[2] == "waveSkip" then
-									pcall(function()
-										game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
-									end)
-								elseif v[2] == "BoostSelect" then
-									pcall(function()
-										game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect"):FireServer(tonumber(tonumber(v[3]) + tonumber(firsttower) - 1),tostring(tonumber(v[4]) + tonumber(firsttower) - 1))
-									end)
-								elseif v[2] == "TimestopEvent" then
-									pcall(function()
-										game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
-									end)
-								else
-									pcall(function()
-										game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
-									end)
+							repeat
+								if gameend.Value == true then
+									break
+								end
+								if V == false then
+									return
 								end
 								wait()
+							until times.Value >= tonumber(v[1]) and gameend.Value == false
+							if v[2] == "placeTower" then
+								pcall(function()
+									local cefra = v[4]:split(", ")
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3],CFrame.new(unpack(cefra)),v[5] == "true")
+								end)
+							elseif v[2] == "waveSkip" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(v[3] == "true")
+								end)
+							elseif v[2] == "BoostSelect" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("BoostSelect"):FireServer(tonumber(tonumber(v[3]) + tonumber(firsttower) - 1),tostring(tonumber(v[4]) + tonumber(firsttower) - 1))
+								end)
+							elseif v[2] == "TimestopEvent" then
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
+								end)
+							else
+								pcall(function()
+									game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild(tostring(v[2])):FireServer(tostring(tonumber(v[3]) + tonumber(firsttower) - 1))
+								end)
 							end
+							wait()
 						end
 					end)
 					pcall(function()
