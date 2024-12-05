@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-	Name = "TDM V2.045",
+	Name = "TDM V2.046",
 	Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
 	LoadingTitle = "TowerDefenseMacro",
 	LoadingSubtitle = "by 牢大",
@@ -131,7 +131,7 @@ if game.PlaceId == 14279724900 then --游戏内
 	})
 	local Section = Tab:CreateSection("录制")
 	local Button = Tab:CreateButton({
-		Name = "开始录制\n（一定要点击重播之后再录制）\n（点击重播自动结束录制)",
+		Name = "全部升级 \n（录制别用自带的容易卡bug)",
 		Callback = function()
 			pcall(function()
 				for i,v in ipairs(workspace.Scripted.TowerData:GetChildren()) do
