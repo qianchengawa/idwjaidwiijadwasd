@@ -66,24 +66,28 @@ if game.PlaceId == 14279724900 then --游戏内
 	end)
 	local F = {}
 
-	local function AddF(event,args)
-		if event == plev then
-			local tower = tostring(args[1])
-			local placeCframe = tostring(args[2])
-			local idkblon = tostring(args[3])
-			F[#F+1] = {tostring(times.Value),event.Name,tower,placeCframe,idkblon}
-		elseif (event == sel or event == up or event == af)  then
-			local towerID = tostring(args[1])
-			F[#F+1] = {tostring(times.Value),event.Name,towerID}
-		elseif event == ws then
-			local blon = tostring(args[1])
-			F[#F+1] = {tostring(times.Value),event.Name,blon}
-		elseif event == slboost then
-			local boost1 = tostring(args[1])
-			local boost2 = tostring(args[2])
-			F[#F+1] = {tostring(times.Value),event.Name,tostring(boost1),tostring(boost2)}
-		elseif event == timestop then
-			F[#F+1] = {tostring(times.Value),event.Name}
+	local function AddF(event,args,allup)
+		if allup then
+			F[#F+1] = {tostring(times.Value),"AllUpgraded"}
+		else
+			if event == plev then
+				local tower = tostring(args[1])
+				local placeCframe = tostring(args[2])
+				local idkblon = tostring(args[3])
+				F[#F+1] = {tostring(times.Value),event.Name,tower,placeCframe,idkblon}
+			elseif (event == sel or event == up or event == af)  then
+				local towerID = tostring(args[1])
+				F[#F+1] = {tostring(times.Value),event.Name,towerID}
+			elseif event == ws then
+				local blon = tostring(args[1])
+				F[#F+1] = {tostring(times.Value),event.Name,blon}
+			elseif event == slboost then
+				local boost1 = tostring(args[1])
+				local boost2 = tostring(args[2])
+				F[#F+1] = {tostring(times.Value),event.Name,tostring(boost1),tostring(boost2)}
+			elseif event == timestop then
+				F[#F+1] = {tostring(times.Value),event.Name}
+			end
 		end
 	end
 
@@ -123,6 +127,22 @@ if game.PlaceId == 14279724900 then --游戏内
 					game:GetService("ReplicatedStorage"):WaitForChild("Game"):WaitForChild("Speed"):WaitForChild("Change"):FireServer(tonumber(speed))
 				end
 			end)
+		end,
+	})
+	local Section = Tab:CreateSection("录制")
+	local Button = Tab:CreateButton({
+		Name = "开始录制\n（一定要点击重播之后再录制）\n（点击重播自动结束录制)",
+		Callback = function()
+			pcall(function()
+				for i,v in ipairs(workspace.Scripted.TowerData:GetChildren()) do
+					for i=1,5,1 do
+						game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("UpgradeTower"):FireServer(tostring(v.Name))
+					end
+				end
+			end)
+			if inc == true then
+				AddF(nil,nil,true)
+			end
 		end,
 	})
 
@@ -206,6 +226,14 @@ if game.PlaceId == 14279724900 then --游戏内
 							elseif v[2] == "TimestopEvent" then
 								pcall(function()
 									game:GetService("ReplicatedStorage"):WaitForChild("TimestopEvent"):FireServer()
+								end)
+							elseif v[2] == "AllUpgraded" then
+								pcall(function()
+									for i,v in ipairs(workspace.Scripted.TowerData:GetChildren()) do
+										for i=1,5,1 do
+											game:GetService("ReplicatedStorage"):WaitForChild("Event"):WaitForChild("UpgradeTower"):FireServer(tostring(v.Name))
+										end
+									end
 								end)
 							else
 								pcall(function()
