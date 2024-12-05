@@ -64,11 +64,6 @@ if game.PlaceId == 14279724900 then --游戏内
 			firsttower = v.Name
 		end
 	end)
-	TowerDatasF.ChildRemoved:Connect(function()
-		if not TowerDatasF:GetChildren()[1] then
-			firsttower = nil
-		end
-	end)
 	local F = {}
 
 	local function AddF(event,args)
@@ -231,12 +226,15 @@ if game.PlaceId == 14279724900 then --游戏内
 						if gameend.Value == true then
 							pcall(function()
 								times.Value = 0
+								firsttower = nil
 								repeat 
 									rp:FireServer()
+									firsttower = nil
 									wait()
 								until gameend.Value == false
 								repeat
 									rd:FireServer(game:GetService("Players").LocalPlayer)
+									firsttower = nil
 									wait()
 								until game:GetService("Players").LocalPlayer.PlayerGui.StartUI.Frame.Labels.startbutton.BackgroundTransparency ~= 1
 							end)
